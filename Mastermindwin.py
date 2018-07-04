@@ -1,19 +1,18 @@
-
 import random
 import sys
-# Tworzy losowy kod
-
 
 sprawdzenie = ["1", "2", "3", "4", "5", "6"]
-dupa = True
 gra = False
 
 # Przywitanie
 print("== Master Mind ==")
+print()
 print("Zasady gry:\nW miejsce 'Podaj kod' wpisujesz 4 cyfry od 1 do 6.\n☻ oznacza, że pewna liczba jest trafiona i na "
       "odpowiednim miejscu.\nZ kolei ☺ oznacza trafioną cyfrę, ale w złym miejscu.\nKolejność emotikonek jest losowa.")
+print()
 
-while dupa:
+# Master loop
+while True:
 
     proba = 0
     losy = ""
@@ -21,21 +20,22 @@ while dupa:
     wybor = ""
     odpowiedz = []
 
+    # Tworzy losowy kod
     for d in range(4):
-        los = str((random.randrange(1,7)))
+        los = str((random.randrange(1, 7)))
         losy += los
-    #print(losy)
+    # print(losy)
 
-# Początek
+    # Początek
     gra = True
     while gra:
         wybor = input("Podaj kod: ")
 
-# Sprawdzenie poprawnosci kodu
+        # Sprawdzenie poprawnosci kodu
         for litera in wybor:
-            if litera not in sprawdzenie: # not in sprawdza cos w czyms
-                print(litera)
-                print(sprawdzenie)
+            if litera not in sprawdzenie:  # not in sprawdza cos w czyms
+                # print(litera)
+                # print(sprawdzenie)
                 print("Zły kod")
                 continue
         if len(wybor) != len(losy):
@@ -44,22 +44,25 @@ while dupa:
 
         test = list(losy)
 
-# Dodawanie emotikonek
+        # Dodawanie emotikonek
         for i in range(4):
             if wybor[i] == losy[i]:
                 test[i] = ""
-                odpowiedz.append("☻")
+                odpowiedz.append("☻ ")
 
         for i in range(4):
             if wybor[i] != losy[i] and wybor[i] in test:
                 test[i] = ""
-                odpowiedz.append("☺")
+                odpowiedz.append("☺ ")
+
+        # Printowanie odpowiedzi
         random.shuffle(odpowiedz)
         odpowiedzi = ""
         for i in odpowiedz:
             odpowiedzi += i
         print(odpowiedzi)
         print()
+        # Printowanie prób
         odpowiedz = []
         proba += 1
         if proba < 7:
@@ -69,7 +72,7 @@ while dupa:
         elif proba == 9:
             print("Pozostała ci", 10 - proba, "próba")
 
-# Przerwanie gry
+        # Przerwanie gry
         if proba == 10:
             print("Skończyły ci się próby")
             print("Szukany kod to:", losy)
@@ -78,12 +81,12 @@ while dupa:
             print("Gratulacje! Udało ci się odgadnąć kod w", proba, "próbach")
             gra = False
 
-# Nowa gra/Koniec gry
+        # Nowa gra/Koniec gry
         if gra == False:
             print()
             koniec = input("Czy chcesz zacząć nową grę? Wpisz 'tak' lub 'nie'")
-            if koniec == "tak":
+            if koniec == "tak" or 't':
                 gra = False
-            elif koniec == "nie":
+            elif koniec == "nie" or 'n':
                 print("Koniec gry")
                 sys.exit()
